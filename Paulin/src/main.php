@@ -148,7 +148,7 @@
             </div>
         </div>
     </nav>
-    <br><br><br><br>
+    <br><br><br>
 
     <div class= "container" id="front1">
         <div class="row mt-5">
