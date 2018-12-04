@@ -17,6 +17,13 @@
     }
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+
+      if (localStorage.correo) {
+        
+      }else {
+        window.location.assign("../login.html")
+      }
+      
       google.charts.load('current', {'packages':['corechart']});
       google.charts.load('current', {'packages':['gauge']});
       google.charts.setOnLoadCallback(drawChart);
@@ -24,37 +31,75 @@
 
         /////////////grafica lineal///////////////
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Periodo', 'Frecuencia'],
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Periodo', 'Frecuencia'], <?php
+                $con = mysqli_connect("localhost","root","","sistemasDSS");
+                $sql = "SELECT * FROM data1";
+                $result = mysqli_query($con,$sql);
+                $n = mysqli_num_rows($result);
 
-    <?php
-        $con= mysqli_connect("localhost","root", "","SistemaDSS");
-        $sql= "Select * from data1";
-        $result = mysqli_query($con, $sql);
-        $n=mysqli_num_rows($result);
+                for ($i=0; $i < $n-1; $i++) { 
+                    $fila = mysqli_fetch_row($result);
+                    print("['".$fila[0]."',".$fila[1]."],");
+                }
+                $fila = mysqli_fetch_row($result);
+                print("['".$fila[0]."',".$fila[1]."]");
+    		
+	        ?>
+            ]);
 
-        for ($i=0; $i < $n ; $i++) { 
-            $fila = mysqli_fetch_row($result);
-            if($i==$n-1){
-            print("['".$fila[0]."',".$fila[1]."]");
-            }else
-            print("['".$fila[0]."',".$fila[1]."],");
+            var options = {
+                title: 'Salario',
+                titleTextStyle: {
+                    color: 'white', 
+                    fontName: 'Arial', 
+                    fontSize: '20',
+                    bold: true
+                },
+                curveType: 'function',
+                backgroundColor: '#303643',
+                colors: ['#ADB7FB'],
+                hAxis: {
+                    title: 'Time',
+                    textStyle: {
+                        color: 'white',
+                        fontSize: 14,
+                        bold: false
+                    },
+                    titleTextStyle: {
+                        color: 'white',
+                        fontSize: 14,
+                        bold: true
+                    }
+                    },
+                    vAxis: {
+                    title: 'Promedio de goles',
+                    textStyle: {
+                        color: 'white',
+                        fontSize: 14,
+                        bold: false
+                    },
+                    titleTextStyle: {
+                        color: 'white',
+                        fontSize: 14,
+                        bold: true
+                    }
+                },
+                legend: {
+                    position: 'right', 
+                    textStyle: {
+                        color: 'white', 
+                        fontSize: 10
+                    }
+                },
+                pointsVisible: true
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
         }
-        ?>
-
-        ]);
-
-        var options = {
-          title: 'Periodo',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-      }
 
       //////////////Grafica Velocimetro////////////////
 
@@ -62,8 +107,8 @@
 
         var data2 = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['Mejor',     <?php
-                            $con = mysqli_connect("localhost", "root", "", "SistemaDSS");
+          ['Mejor', <?php
+                            $con = mysqli_connect("localhost", "root", "", "sistemasDSS");
                             $sql = "Select * from data1";
                             $result = mysqli_query($con, $sql);
                             $n = mysqli_num_rows($result);
@@ -89,18 +134,6 @@
 
         chart2.draw(data2, options2);
 
-        setInterval(function() {
-          data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
-          chart2.draw(data2, options2);
-        }, 13000);
-        setInterval(function() {
-          data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
-          chart2.draw(data2, options2);
-        }, 5000);
-        setInterval(function() {
-          data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
-          chart2.draw(data2, options2);
-        }, 26000);
       }
     </script>
 
