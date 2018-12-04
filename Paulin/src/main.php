@@ -13,29 +13,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-    <style>
-
-    html,body{
-    background-image: url('http://getwallpapers.com/wallpaper/full/b/9/6/297962.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 100%;
-    font-family: 'Numans', sans-serif;
-    color: #ffffff95;
-    }    
-    .bg-dark {
-    background: #004FA4 !important;
+    <link rel="stylesheet" href="css/styleMain.css">
     }
-
-    .btn-primary {
-    background: #004FA4 !important;
-    }
-    #front1{
-        background-color: rgba(0,0,0,0.75) !important;
-    }
-
-    </style>
-
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -130,7 +109,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/Paulin/src/main.html"><img src="/Paulin/images/logoQ.png" alt="" height="40" width="40" ><b> Pronostico App</b></a>
+            <a class="navbar-brand" href="main.php"><img src="../images/logoQ.png" alt="" height="40" width="40" ><b> Pronostico App</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -142,7 +121,7 @@
                         <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter"><i class="far fa-envelope"></i> Enviar Correo</button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Paulin/index.html"><i class="fas fa-sign-out-alt" style="font-size: 1.4em;"></i></a>
+                        <a class="nav-link" href="../index.html"><i class="fas fa-sign-out-alt" style="font-size: 1.4em;"></i></a>
                     </li>
                 </ul>
             </div>
@@ -155,32 +134,33 @@
             <div class = "col-md-5">
                 <br><br>
                 <h4>Lista de Estadisticas</h4><br>
-
+                <div class="table-wrapper-scroll-y">
                 <?php
-                $con=mysqli_connect("localhost", "root", "", "SistemaDSS");
-                $sql = "Select * from data1";
-                $result = mysqli_query($con, $sql);
+                    $con=mysqli_connect("localhost", "root", "", "sistemasDSS");
+                    $sql = "Select * from data1";
+                    $result = mysqli_query($con, $sql);
 
-                echo "<table class=' table table-borddered table-hover align-middle'>
-                <thead>
-                <tr>
-                <th>Periodo</th>
-                <th>Frecuencia</th>
-                </tr>
-                </thead>
-                <tbody>";
+                    echo ("<table class='table table-bordered table-striped'>
+                    <thead>
+                    <tr>
+                    <th><strong>Periodo</strong></th>
+                    <th><strong>Frecuencia</strong></th>
+                    </tr>
+                    </thead>
+                    <tbody>");
 
-                while($row = mysqli_fetch_array($result))
-                {
-                echo "<tr>";
-                echo "<td>" . $row['PERIODO'] . "</td>";
-                echo "<td>" . $row['FRECUENCIA'] . "</td>";
-                echo "</tr>";
-                }
-                echo "</tbody> </table>";
+                    while($row = mysqli_fetch_array($result))
+                    {
+                    echo "<tr>";
+                    echo "<td>" . $row['PERIODO'] . "</td>";
+                    echo "<td>" . $row['FRECUENCIA'] . "</td>";
+                    echo "</tr>";
+                    }
+                    echo "</tbody> </table>";
 
-                mysqli_close($con);
+                    mysqli_close($con);
                 ?>
+                </div>
             </div>
             <div class = "col-md-7 align-middle">
                 <br>
@@ -223,5 +203,7 @@
 </div>
 
 </body>
+
+
 
 </html>
