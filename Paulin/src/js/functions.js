@@ -36,3 +36,7 @@ function login() {
         $('#alerta').show(); 
     }
 }
+
+function cerrar(){
+    localStorage.clear();
+}
